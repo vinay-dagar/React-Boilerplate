@@ -1,38 +1,73 @@
-import React, { Component } from 'react'
-import { MDBSideNavCat,  MDBSideNav, MDBSideNavLink, MDBContainer, MDBIcon, MDBBtn } from "mdbreact";
+import React, { Component } from 'react';
+import LinkInline from 'components/link-inline';
 
-export default class sidebar extends Component {
-
+class Sidebar extends Component {
     state = {
-        sideNavLeft: false,
-      }
-    
-    sidenavToggle = sidenavId => () => {
-      const sidenavNr = `sideNav${sidenavId}`
-      this.setState({
-        [sidenavNr]: !this.state[sidenavNr]
-      });
+        activeMenu: '/',
     };
 
-    render() {
-        return (
-            <MDBContainer>
-                <MDBBtn onClick={this.sidenavToggle("Left")}>
-                    <MDBIcon size="lg" icon="bars" />
-                </MDBBtn>
-                <MDBSideNav slim fixed mask="rgba-blue-strong" triggerOpening={this.state.sideNavLeft} breakWidth={1300}
-                    className="sn-bg-1">
-                    <li>
-                        <div className="logo-wrapper sn-ad-avatar-wrapper">
-                            <a href="#!">
-                                <img alt="" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" className="rounded-circle" />
-                                <span>Anna Deynah</span>
-                            </a>
-                        </div>
-                    </li>
-
-                </MDBSideNav>
-            </MDBContainer>
-        )
+    setActiveMenu(val){
+        this.setState({
+            'activeMenu': val 
+        });
     }
-}
+
+    componentWillMount() {
+        this.setActiveMenu(window.location.pathname);
+    }
+
+    render () {
+        const menus =  [{
+            route: '/',
+            icon: 'fa fa-home',
+            label: 'Dashboard',
+        }, {
+            route: '/manage-user',
+            icon: 'fa fa-users',
+            label: 'Manage User',
+        },  {
+            route: '/manage-log',
+            icon: 'fa fa-files-o',
+            label: 'Manage Logs',
+        }, {
+            route: '/profile',
+            icon: 'fa fa-user',
+            label: 'My Profile',
+        },{
+            route: '/login',
+            icon: 'fa fa-power-off ',
+            label: 'Logout',
+        }];
+
+        // {
+        //     route: '/manage-role',
+        //     icon: 'fa fa-key',
+        //     label: 'Manage Roles',
+        // },
+
+        const items = [];
+
+        for(const menu of menus) {
+            items.push(
+                <li key={menu.route} className={this.state.activeMenu === menu.route ? 'active' : ''} onClick={this.setActiveMenu.bind(this, menu.route)} >
+                    <LinkInline route={menu.route}> 
+                        <i className={menu.icon}></i> 
+                        <span>{menu.label}</span> 
+                    </LinkInline>
+                </li>
+            );
+        }
+
+        return (
+            <aside className="main-sidebar"> 
+                <div className="sidebar"> 
+                    <ul className="sidebar-menu">
+                        {items}
+                    </ul>
+                </div>
+            </aside>
+        );
+    }
+};
+
+export default Sidebar;

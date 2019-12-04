@@ -4,26 +4,8 @@ import {
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon
 } from "mdbreact";
 import { BrowserRouter as Router } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { logout } from '../../store/actions/auth';
-import Action from './action';
 
-const mapStateToProps = (state) => {
-    return {
-        logout: state.logout
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: (payload) => {
-            dispatch(logout())
-        }
-    }
-}
-
-class Header extends React.Component {
-    render() {
+const header = (props) => {
         return (
             <Router>
                 <MDBNavbar fixed color="white" expand="md">
@@ -69,8 +51,8 @@ class Header extends React.Component {
                                             style={{ height: "45px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu className="dropdown-default">
-                                        <MDBDropdownItem href="setting">Settings</MDBDropdownItem>
-                                        <MDBDropdownItem onClick={Action.logout.bind(this)} >Log Out</MDBDropdownItem>
+                                        <MDBDropdownItem href="setting" >Settings</MDBDropdownItem>
+                                        <MDBDropdownItem onClick={props.logout}> Log Out</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             </MDBNavItem>
@@ -79,6 +61,6 @@ class Header extends React.Component {
                 </MDBNavbar>
             </Router>
         )
-    }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+
+export default header

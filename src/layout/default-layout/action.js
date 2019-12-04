@@ -3,9 +3,10 @@ const action = {
             event.preventDefault()
 
             console.log(this.props, 'props')
+            
             this.props.logout()
-            this.props.history.push('/login');
             window.$utility.showSucessMessage('Successfully logged out!');
+            this.props.history.history.push('/login');
     }
 }
 

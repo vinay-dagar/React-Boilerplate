@@ -1,23 +1,23 @@
 const initialState = {
     isAuthenticated: false,
     user: {},
-    notifications: [] 
+    notifications: []
 }
 
 const authReducer = async (state = initialState, { type, payload }) => {
     switch (type) {
-        case 'LOGIN':{
-
+        case 'LOGIN': {
             localStorage.setItem('x-access-token', payload.token)
-            localStorage.setItem('user', payload.user)
+            localStorage.setItem('user', JSON.stringify(payload.user))
 
             state = {
                 ...state,
                 user: payload.user,
                 isAuthenticated: true
             }
+            return state;
         }
-        case 'LOGOUT':{
+        case 'LOGOUT': {
 
             localStorage.clear()
             state = {
@@ -25,9 +25,8 @@ const authReducer = async (state = initialState, { type, payload }) => {
                 user: {},
                 isAuthenticated: false
             }
+            return state
         }
-
-    return state;
     }
 }
 export default authReducer;

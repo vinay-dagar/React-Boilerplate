@@ -4,7 +4,7 @@ import DefaultLayout from 'layout/default-layout';
 export default class UserProfile extends Component {
     render() {
         return (
-            <DefaultLayout>
+            <DefaultLayout history={this.props}>
                 <div className="content-wrapper"> 
                     <div className="content-header sty-one">
                         <h1>Ecommerce Dashboard</h1>
