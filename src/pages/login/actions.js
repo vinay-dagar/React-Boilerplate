@@ -11,24 +11,24 @@ const action = {
         try {
             event.preventDefault()
 
-            console.log(this.props, 'props')
+            if(!this.state.email) window.$message.error('Email is required!');
+            if(!this.state.password) window.$message.error('Password is required!');
+            
+            const result = await window.$http.postWithoutHeaders('login', {
+                email: this.state.email,
+                password: this.state.password,
+            });
 
+            if(!result) return window.$utility.showErrorMessage('Some thing went wrong!')
+            
+            // save user in local storage or redux
 
-            // if(!this.state.email) window.$message.error('Email is required!');
-            // if(!this.state.password) window.$message.error('Password is required!');
-
-            // const result = await window.$http.postWithoutHeaders('login', {
-            //     email: this.state.email,
-            //     password: this.state.password,
-            // });
-
-            // // save user in local storage or redux
-            // localStorage.setItem('user', JSON.stringify(result.user))
-            // localStorage.setItem('x-access-token', result.token)
-            // this.props.history.push('/');
+            this.props.login(result)
+            this.props.history.push('/');
+            window.$utility.showSucessMessage('Successfully loggedIn');
         } catch (error) {
-            window.$utility.message.error(error.message);
             console.log(error)
+            window.$utility.showErrorMessage(error.message);
         }
     }
 }

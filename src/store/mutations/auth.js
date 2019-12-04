@@ -1,21 +1,14 @@
-const login = async (email, password) => {
+import api from '../../services/api';
+import utilities from '../../services/utilities';
+
+export const login = async (email, password) => {
     try {
-        const result = await window.$http.post('login', {email, password});
-
-        if(!result) return {
-            success: false,
-        }
-
-        return {
-            success: true,
-            result
-        };
+        
+        return await api.postWithoutHeaders('login', {email, password});
 
     } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            error
-        }
+        utilities.message.error(error.message)
+        
+        return error
     }
 }

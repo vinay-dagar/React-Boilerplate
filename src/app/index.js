@@ -11,6 +11,7 @@ import 'assets/css/style.css'
 import 'services/api'
 import 'services/lodash'
 import 'services/utilities'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class App extends Component {
     render() {

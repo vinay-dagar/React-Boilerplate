@@ -10,7 +10,28 @@ const service = {
         }));
         return [...mapped];
     },
-    message: toast,
+    showSucessMessage(message) {
+        if (!message) return;
+
+        toast.success(message, {
+            position: toast.POSITION.TOP_CENTER
+        });
+    },
+    showWarningMessage(message) {
+        if (!message) return;
+
+        toast.warn(message, {
+            position: toast.POSITION.TOP_CENTER
+        });
+    },
+    showErrorMessage(message) {
+        if (!message) return;
+
+        toast.error(message, {
+            position: toast.POSITION.TOP_CENTER
+        });
+    },
+
 };
 
 window.$utility = service;

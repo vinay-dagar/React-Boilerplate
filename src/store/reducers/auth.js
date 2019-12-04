@@ -4,17 +4,30 @@ const initialState = {
     notifications: [] 
 }
 
-const authReducer = (state = initialState, { type, payload }) => {
+const authReducer = async (state = initialState, { type, payload }) => {
     switch (type) {
         case 'LOGIN':{
-            return payload
+
+            localStorage.setItem('x-access-token', payload.token)
+            localStorage.setItem('user', payload.user)
+
+            state = {
+                ...state,
+                user: payload.user,
+                isAuthenticated: true
+            }
         }
         case 'LOGOUT':{
 
-            return payload
+            localStorage.clear()
+            state = {
+                ...state,
+                user: {},
+                isAuthenticated: false
+            }
         }
-        default:
-            return state
+
+    return state;
     }
 }
 export default authReducer;
