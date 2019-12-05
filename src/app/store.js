@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk'
-import reducers from '../store/reducers/auth'
+import reducers from '../reducers/index'
 
 
 /**
@@ -25,12 +25,42 @@ middlewares.push(logger);
 if (process.env.NODE_ENV !== "production") {
     //   middlewares.push(freeze);
 }
+const initialState = {
+    auth: {
+        isAuthenticated: false,
+        user: {},
+    }
+}
 
-// apply middlewares
-let middleware = applyMiddleware(...middlewares);
+/**
+ * 
+ * @param state current state of the application.
+ * saves the current state of the application to localstorage for preventing state to be lost.
+ */
 
+function saveStateTOLocalStorage(state) {
+    const serilizedState = JSON.stringify(state)
+    localStorage.setItem('state', serilizedState)
+}
+
+function loadFromLocalStorage() {
+    const serilizedState = localStorage.getItem('state');
+    if(serilizedState === null) return undefined
+    return JSON.parse(serilizedState)
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const persistedState = loadFromLocalStorage();
 // create store
-const store = createStore(combineReducers({ reducers }), {}, middleware);
+const store = createStore(
+    reducers,
+    persistedState,
+    composeEnhancers(
+        applyMiddleware(...middlewares),
+    ));
 
+    store.subscribe(() => {
+        saveStateTOLocalStorage(store.getState())
+    });
 // export
 export { store };

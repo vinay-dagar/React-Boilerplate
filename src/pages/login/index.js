@@ -5,7 +5,8 @@ import FormLayout from 'layout/form-layout';
 import LinkInline from 'components/link-inline';
 import FormFieldInput from 'components/form-field-input';
 import Actions from './actions';
-import { login } from '../../store/actions/auth';
+import { login } from 'actions/auth';
+import {store} from '../../app/store'
 
 const Footer = () => (
    <div>
@@ -31,7 +32,7 @@ const Footer = () => (
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        // login: state.login
     }
 }
 
@@ -49,7 +50,6 @@ class Login extends Component {
         password: '',
         rememberEmail: false,
     };
-
     render () {
         return (
             <FormLayout

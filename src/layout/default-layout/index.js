@@ -3,14 +3,14 @@ import Header from './header';
 import Footer from './footer';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
-import { logout } from '../../store/actions/auth';
+import { logout } from '../../actions/auth';
 import SideBar from './sidebar';
 import Actions from './action';
-import { useHistory, Route } from 'react-router-dom';
+import Nav from './nav';
 
 const mapStateToProps = (state) => {
     return {
-        logout: state.logout
+        user: state.auth
     }
 }
 
@@ -25,13 +25,19 @@ const mapDispatchToProps = (dispatch) => {
 class DefaultLayout extends React.Component {
 
     render() {
+        const {user} = this.props.user;
         return (
-            <div className="wrapper">
+            <div className="wrapper boxed-wrapper">
                 <ToastContainer />
-                <Header logout={Actions.logout.bind(this)} />
+                <Header logout={Actions.logout.bind(this)} user={user} />
                 <SideBar />
                 <main>
-                    {this.props.children}
+                    <div className="content-wrapper">
+                        <Nav />
+                        <div className="content">
+                            {this.props.children}
+                        </div>
+                    </div>
                 </main>
                 <Footer />
             </div>
