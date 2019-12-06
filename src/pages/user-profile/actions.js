@@ -24,16 +24,19 @@ const action = {
     async updateUserProfile(event) {
         try {
             event.preventDefault()
+
+            const data = {
+                fullName: this.state.fullName,
+                phoneNumber: this.state.phoneNumber,
+                city: this.state.city,
+                state: this.state.state,
+                address: this.state.address,
+            }
+            const result = await window.$http.put('user', data);
+
+            if(!result) return window.$utility.showErrorMessage('Something went wrong!');
             
             window.$utility.showSucessMessage('Profile successfully updated');
-            // const data = {
-            //     fullName: this.state.fullName,
-            //     phoneNumber: this.state.phoneNumber,
-            //     city: this.state.city,
-            //     state: this.state.state,
-            //     address: this.state.address,
-            // }
-            // const result = await window.$http.put('user', data);
         } catch (error) {
             console.log(error)
             window.$utility.showErrorMessage(error.message);
