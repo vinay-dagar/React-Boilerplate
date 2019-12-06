@@ -24,6 +24,7 @@ const action = {
             // save user in local storage or redux
 
             this.props.login(result)
+            
             this.props.history.push('/');
             window.$utility.showSucessMessage('Successfully loggedIn');
         } catch (error) {

@@ -6,7 +6,6 @@ import LinkInline from 'components/link-inline';
 import FormFieldInput from 'components/form-field-input';
 import Actions from './actions';
 import { login } from 'actions/auth';
-import {store} from '../../app/store'
 
 const Footer = () => (
    <div>

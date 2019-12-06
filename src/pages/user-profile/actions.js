@@ -32,10 +32,14 @@ const action = {
                 state: this.state.state,
                 address: this.state.address,
             }
-            const result = await window.$http.put('user', data);
+            const result = await window.$http.updateById('user',this.props.user.id , data);
 
             if(!result) return window.$utility.showErrorMessage('Something went wrong!');
             
+            // updated redux store if the user gets updated in backend.
+            this.props.updateUser(result);
+            this.props.history.push('/');
+
             window.$utility.showSucessMessage('Profile successfully updated');
         } catch (error) {
             console.log(error)

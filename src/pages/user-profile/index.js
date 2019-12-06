@@ -4,7 +4,7 @@ import userImage from 'assets/img/img1.jpg';
 import { connect } from 'react-redux';
 import FormFieldInput from 'components/form-field-input';
 import Actions from './actions';
-import { updateUser } from 'actions/user'
+import { updateUser } from 'actions/auth'
 
 const mapStateToProps = (state) => {
     return {
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        user: (payload) => {
+        updateUser: (payload) => {
             dispatch(updateUser(payload))
         }
     }
@@ -29,7 +29,7 @@ class Profile extends Component {
         country: '',
         city: '',
         state: '',
-        address: ''
+        address: '',
     }
 
     componentWillMount() {

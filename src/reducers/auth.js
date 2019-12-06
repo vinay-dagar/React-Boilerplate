@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../actions/types';
+import { LOGIN, LOGOUT, UPDATE_USER } from '../actions/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -25,6 +25,16 @@ export default function(state = initialState, {type, payload}) {
                 isAuthenticated: false
             }
             return state
+        }
+        case UPDATE_USER: {
+            localStorage.removeItem('user')
+            localStorage.setItem('user', JSON.stringify(payload))
+
+            return {
+                ...state,
+                user: payload,
+                isAuthenticated: true
+            };
         }
         default: return state
     }
